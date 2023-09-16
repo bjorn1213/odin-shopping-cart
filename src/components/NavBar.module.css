@@ -1,10 +1,10 @@
-.nav-bar > ul {
+.navBar > ul {
     list-style-type: none; /* Remove bullets */
     padding: 0; /* Remove padding */
     margin: 0; /* Remove margins */
 }
 
-.nav-bar > ul > li {
+.navBar > ul > li {
     display: inline;
     margin: 5px;
 }

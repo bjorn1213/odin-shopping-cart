@@ -1,11 +1,10 @@
 import PropTypes from "prop-types";
-import NavBar from "./NavBar";
-import "./PageHeader.css";
+import styles from "./PageHeader.module.css";
 
 function PageHeader({ children }) {
   return (
     <>
-      <div className="page-header">
+      <div className={styles.pageHeader}>
         <h1>ShoppyShop</h1>
         {children}
       </div>
