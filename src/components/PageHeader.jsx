@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import NavBar from "./NavBar";
+import "./PageHeader.css";
 
 function PageHeader({ children }) {
   return (
@@ -13,7 +14,7 @@ function PageHeader({ children }) {
 }
 
 PageHeader.propTypes = {
-  children: PropTypes.instanceOf(NavBar),
+  children: PropTypes.object,
 };
 
 export default PageHeader;

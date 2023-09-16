@@ -1,7 +1,7 @@
 import { vi } from "vitest";
 import userEvent from "@testing-library/user-event";
 import { render, screen } from "@testing-library/react";
-import Button from "./Button";
+import Button from "../Button";
 
 describe("Button component", () => {
   it("Contains specified text", () => {

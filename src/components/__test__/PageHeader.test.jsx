@@ -1,5 +1,5 @@
-import PageHeader from "./PageHeader";
-import NavBar from "./NavBar";
+import PageHeader from "../PageHeader";
+import NavBar from "../NavBar";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 

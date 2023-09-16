@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import "./NavBar.css";
 
 const navItems = [
   { text: "Home", target: "/" },
@@ -10,7 +11,7 @@ const navItems = [
 function NavBar() {
   return (
     <>
-      <nav>
+      <nav className="nav-bar">
         <ul>
           {navItems.map((navItem) => {
             return (
