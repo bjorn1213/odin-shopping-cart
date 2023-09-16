@@ -20,7 +20,12 @@ function NavBar({ navItems }) {
 }
 
 NavBar.propTypes = {
-  navItems: PropTypes.any,
+  navItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      text: PropTypes.string,
+      target: PropTypes.string,
+    })
+  ),
 };
 
 export default NavBar;
