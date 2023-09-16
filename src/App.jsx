@@ -1,9 +1,15 @@
 import "./App.css";
+import PageHeader from "./components/PageHeader";
+import NavBar from "./components/NavBar";
+import { Outlet } from "react-router-dom";
 
 function App() {
   return (
     <>
-      <div>Setup page</div>
+      <PageHeader>
+        <NavBar />
+      </PageHeader>
+      <Outlet />
     </>
   );
 }

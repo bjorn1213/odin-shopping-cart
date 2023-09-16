@@ -1,7 +1,13 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-function NavBar({ navItems }) {
+const navItems = [
+  { text: "Home", target: "/" },
+  { text: "Products", target: "/products" },
+  { text: "Cart", target: "/cart" },
+];
+
+function NavBar() {
   return (
     <>
       <nav>
