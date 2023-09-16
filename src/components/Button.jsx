@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 function Button({ buttonText, buttonCallback }) {
   return (
     <>
@@ -5,5 +7,10 @@ function Button({ buttonText, buttonCallback }) {
     </>
   );
 }
+
+Button.propTypes = {
+  buttonText: PropTypes.string,
+  buttonCallback: PropTypes.func,
+};
 
 export default Button;
