@@ -1,0 +1,7 @@
+.ProductCardContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 300px;
+    gap: 20px;
+    padding: 20px;
+}

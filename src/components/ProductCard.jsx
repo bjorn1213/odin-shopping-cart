@@ -1,28 +1,38 @@
 import PropTypes from "prop-types";
 import styles from "./ProductCard.module.css";
+import { useEffect, useState } from "react";
+import getProductByID from "../utility/getProductByID";
 
-function ProductCard({ product }) {
+function ProductCard({ productID }) {
+  const [imgSrc, setImgSrc] = useState("");
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    const product = getProductByID(productID);
+    product.then((prod) => {
+      setImgSrc(prod.image);
+      setTitle(prod.title);
+      setPrice(prod.price);
+      setDescription(prod.description);
+    });
+  }, [productID]);
+
   return (
     <>
-      <div>
-        <img src={product.image} alt={product.title} />
-        <div className={styles.productTitle}>{product.title}</div>
-        <div>{product.price}</div>
-        <div>{product.description}</div>
+      <div className={styles.productCard}>
+        <img src={imgSrc} alt={title} />
+        <div className={styles.productTitle}>{title}</div>
+        <div>{price}</div>
+        <div>{description}</div>
       </div>
     </>
   );
 }
 
 ProductCard.propTypes = {
-  product: PropTypes.arrayOf(
-    PropTypes.shape({
-      image: PropTypes.string,
-      title: PropTypes.string,
-      price: PropTypes.string,
-      description: PropTypes.string,
-    })
-  ),
+  productID: PropTypes.number,
 };
 
 export default ProductCard;

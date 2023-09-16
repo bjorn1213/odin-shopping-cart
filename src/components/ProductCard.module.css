@@ -1,4 +1,17 @@
 
+.productCard {
+    display: grid;
+    grid-template-columns: 6fr 1fr;
+    overflow: hidden;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
 .productTitle{
     font-size: 1.1 rem;
+}
+
+img {
+    width:100%;
+    grid-column: 1/-1;
 }
