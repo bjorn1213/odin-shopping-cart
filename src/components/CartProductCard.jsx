@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
-import styles from "./ProductCard.module.css";
+import styles from "./CartProductCard.module.css";
 import { useEffect, useState } from "react";
 import getProductByID from "../utility/getProductByID";
 import Button from "./Button";
 import { getAmount, setProductAmount } from "../utility/cartUtility";
 
-function ProductCard({ productID }) {
+function CartProductCard({ productID }) {
   const [imgSrc, setImgSrc] = useState("");
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
@@ -41,19 +41,20 @@ function ProductCard({ productID }) {
         <img className={styles.productImg} src={imgSrc} alt={title} />
         <div className={styles.productTitle}>{title}</div>
         <div>{price}</div>
-        <div>{description}</div>
+        <div>{1}</div>
         <div className={styles.cartControls}>
-          <Button buttonText={"-"} buttonCallback={removeProduct} />
+          <Button buttonText={"-"} buttonCallback={removeProduct}></Button>
           {curAmount}
-          <Button buttonText={"+"} buttonCallback={addProduct} />
+          <Button buttonText={"+"} buttonCallback={addProduct}></Button>
         </div>
+        <div>{`€${price * curAmount}`}</div>
       </div>
     </>
   );
 }
 
-ProductCard.propTypes = {
+CartProductCard.propTypes = {
   productID: PropTypes.number,
 };
 
-export default ProductCard;
+export default CartProductCard;

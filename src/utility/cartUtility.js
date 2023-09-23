@@ -1,4 +1,10 @@
+import { string } from "prop-types";
+
 const STORAGE_KEY = "Cart";
+
+function productIDtoString(productID) {
+  return `${productID}`;
+}
 
 function saveCart(cartObject) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(cartObject));
@@ -10,7 +16,8 @@ function getCart() {
   return cartObject === null ? {} : JSON.parse(cartObject);
 }
 
-function addToCart(productID) {
+function addToCart(inputProductID) {
+  const productID = productIDtoString(inputProductID);
   const cartObject = getCart();
   if (productID in cartObject) {
     cartObject[productID] += 1;
@@ -20,7 +27,8 @@ function addToCart(productID) {
   saveCart(cartObject);
 }
 
-function removeFromCart(productID) {
+function removeFromCart(inputProductID) {
+  const productID = productIDtoString(inputProductID);
   const cartObject = getCart();
   if (productID in cartObject) {
     if (cartObject[productID] === 1) {
@@ -32,22 +40,33 @@ function removeFromCart(productID) {
   saveCart(cartObject);
 }
 
-function setProductAmount(productID, amount) {
+function setProductAmount(inputProductID, amount) {
+  const productID = productIDtoString(inputProductID);
   const cartObject = getCart();
   if (!(amount >= 0 && Number.isInteger(amount))) {
     throw new Error(`Amount must be a positive integer (Received ${amount})`);
   }
-  cartObject[productID] = amount;
-  saveCart(cartObject);
+  if (amount === 0) {
+    removeFromCart(inputProductID);
+  } else {
+    cartObject[productID] = amount;
+    saveCart(cartObject);
+  }
 }
 
 function clearCart() {
   saveCart({});
 }
 
-function getAmount(productID) {
+function getAmount(inputProductID) {
   const cartObject = getCart();
-  return productID in cartObject ? cartObject[productID] : 0;
+  const productID = productIDtoString(inputProductID);
+  return productID in cartObject ? +cartObject[productID] : 0;
+}
+
+function getProductIDs() {
+  const stringProductIDs = Object.keys(getCart());
+  return stringProductIDs.map((sID) => +sID);
 }
 
 export {
@@ -58,4 +77,5 @@ export {
   setProductAmount,
   clearCart,
   getAmount,
+  getProductIDs,
 };
