@@ -42,18 +42,26 @@ function CartProductCard({ productID }) {
         <img className={styles.productImg} src={imgSrc} alt={title} />
         <div className={styles.middleSection}>
           <div className={styles.productTitle}>{title}</div>
-          <div className={styles.itemPrice}>€{priceFormatter(price)}</div>
+          {price ? (
+            <div className={styles.itemPrice}>€{priceFormatter(price)}</div>
+          ) : (
+            <></>
+          )}
         </div>
-        <div className={styles.rightSection}>
-          <div className={styles.cartControls}>
-            <div className={styles.itemAmount}>x {curAmount}</div>
-            <Button buttonText={"+"} buttonCallback={addProduct}></Button>
-            <Button buttonText={"-"} buttonCallback={removeProduct}></Button>
+        {price ? (
+          <div className={styles.rightSection}>
+            <div className={styles.cartControls}>
+              <div className={styles.itemAmount}>x {curAmount}</div>
+              <Button buttonText={"+"} buttonCallback={addProduct}></Button>
+              <Button buttonText={"-"} buttonCallback={removeProduct}></Button>
+            </div>
+            <div className={styles.itemTotal}>{`€${priceFormatter(
+              price * curAmount
+            )}`}</div>
           </div>
-          <div className={styles.itemTotal}>{`€${priceFormatter(
-            price * curAmount
-          )}`}</div>
-        </div>
+        ) : (
+          <></>
+        )}
       </div>
     </>
   );
