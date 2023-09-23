@@ -1,13 +1,13 @@
 const STORAGE_KEY = "Cart";
 
 function saveCart(cartObject) {
-  localStorage.setItem(STORAGE_KEY, cartObject);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(cartObject));
 }
 
 function getCart() {
   const cartObject = localStorage.getItem(STORAGE_KEY);
 
-  return cartObject === null ? {} : cartObject;
+  return cartObject === null ? {} : JSON.parse(cartObject);
 }
 
 function addToCart(productID) {
