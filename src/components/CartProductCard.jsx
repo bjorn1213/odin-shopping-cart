@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import getProductByID from "../utility/getProductByID";
 import Button from "./Button";
 import { getAmount, setProductAmount } from "../utility/cartUtility";
+import priceFormatter from "../utility/priceFormatter";
 
 function CartProductCard({ productID }) {
   const [imgSrc, setImgSrc] = useState("");
@@ -39,15 +40,20 @@ function CartProductCard({ productID }) {
     <>
       <div className={styles.productCard}>
         <img className={styles.productImg} src={imgSrc} alt={title} />
-        <div className={styles.productTitle}>{title}</div>
-        <div>{price}</div>
-        <div>{1}</div>
-        <div className={styles.cartControls}>
-          <Button buttonText={"-"} buttonCallback={removeProduct}></Button>
-          {curAmount}
-          <Button buttonText={"+"} buttonCallback={addProduct}></Button>
+        <div className={styles.middleSection}>
+          <div className={styles.productTitle}>{title}</div>
+          <div className={styles.itemPrice}>€{priceFormatter(price)}</div>
         </div>
-        <div>{`€${price * curAmount}`}</div>
+        <div className={styles.rightSection}>
+          <div className={styles.cartControls}>
+            <div className={styles.itemAmount}>x {curAmount}</div>
+            <Button buttonText={"+"} buttonCallback={addProduct}></Button>
+            <Button buttonText={"-"} buttonCallback={removeProduct}></Button>
+          </div>
+          <div className={styles.itemTotal}>{`€${priceFormatter(
+            price * curAmount
+          )}`}</div>
+        </div>
       </div>
     </>
   );
