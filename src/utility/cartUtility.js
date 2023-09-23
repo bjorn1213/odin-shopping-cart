@@ -45,11 +45,17 @@ function clearCart() {
   saveCart({});
 }
 
-export default {
+function getAmount(productID) {
+  const cartObject = getCart();
+  return productID in cartObject ? cartObject[productID] : 0;
+}
+
+export {
   saveCart,
   getCart,
   addToCart,
   removeFromCart,
   setProductAmount,
   clearCart,
+  getAmount,
 };
