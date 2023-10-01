@@ -1,3 +1,7 @@
 export default function priceFormatter(price) {
-  return Number.parseFloat(price).toFixed(2);
+  const eurFormat = Intl.NumberFormat("nl-NL", {
+    style: "currency",
+    currency: "EUR",
+  });
+  return eurFormat.format(Number.parseFloat(price));
 }

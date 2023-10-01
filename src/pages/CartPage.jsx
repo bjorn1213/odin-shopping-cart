@@ -39,7 +39,7 @@ function CartPage() {
       ) : (
         <div className={styles.cartItemContainer}>No items in cart</div>
       )}
-      <div className={styles.cartTotalContainer}>€{priceFormatter(total)}</div>
+      <div className={styles.cartTotalContainer}>{priceFormatter(total)}</div>
     </>
   );
 }

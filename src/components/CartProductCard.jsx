@@ -26,7 +26,7 @@ function CartProductCard({ product, amountSetter }) {
           <div className={styles.productTitle}>{product.title}</div>
           {product.price ? (
             <div className={styles.itemPrice}>
-              €{priceFormatter(product.price)}
+              {priceFormatter(product.price)}
             </div>
           ) : (
             <></>
@@ -39,7 +39,7 @@ function CartProductCard({ product, amountSetter }) {
               <Button buttonText={"+"} buttonCallback={addProduct}></Button>
               <Button buttonText={"-"} buttonCallback={removeProduct}></Button>
             </div>
-            <div className={styles.itemTotal}>{`€${priceFormatter(
+            <div className={styles.itemTotal}>{`${priceFormatter(
               product.price * product.quantity
             )}`}</div>
           </div>
