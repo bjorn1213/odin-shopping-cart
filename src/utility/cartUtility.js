@@ -1,5 +1,3 @@
-import { string } from "prop-types";
-
 const STORAGE_KEY = "Cart";
 
 function productIDtoString(productID) {
@@ -16,42 +14,44 @@ function getCart() {
   return cartObject === null ? {} : JSON.parse(cartObject);
 }
 
-function addToCart(inputProductID) {
-  const productID = productIDtoString(inputProductID);
+function addToCart(inputProduct) {
+  const productID = productIDtoString(inputProduct.id);
   const cartObject = getCart();
   if (productID in cartObject) {
-    cartObject[productID] += 1;
+    cartObject[productID].quantity += 1;
   } else {
-    cartObject[productID] = 1;
+    cartObject[productID] = { quantity: 1, ...inputProduct };
   }
   saveCart(cartObject);
 }
 
-function removeFromCart(inputProductID) {
-  const productID = productIDtoString(inputProductID);
+function removeFromCart(inputProduct) {
+  const productID = productIDtoString(inputProduct.id);
   const cartObject = getCart();
   if (productID in cartObject) {
-    if (cartObject[productID] === 1) {
+    if (cartObject[productID].quantity === 1) {
       delete cartObject[productID];
     } else {
-      cartObject[productID] -= 1;
+      cartObject[productID].quantity -= 1;
     }
   }
   saveCart(cartObject);
 }
 
-function setProductAmount(inputProductID, amount) {
-  const productID = productIDtoString(inputProductID);
+function setProductAmount(inputProduct, amount) {
+  const productID = productIDtoString(inputProduct.id);
   const cartObject = getCart();
   if (!(amount >= 0 && Number.isInteger(amount))) {
     throw new Error(`Amount must be a positive integer (Received ${amount})`);
   }
   if (amount === 0) {
-    removeFromCart(inputProductID);
+    delete cartObject[productID];
+  } else if (productID in cartObject) {
+    cartObject[productID].quantity = amount;
   } else {
-    cartObject[productID] = amount;
-    saveCart(cartObject);
+    cartObject[productID] = { quantity: amount, ...inputProduct };
   }
+  saveCart(cartObject);
 }
 
 function clearCart() {
@@ -61,7 +61,7 @@ function clearCart() {
 function getAmount(inputProductID) {
   const cartObject = getCart();
   const productID = productIDtoString(inputProductID);
-  return productID in cartObject ? +cartObject[productID] : 0;
+  return productID in cartObject ? +cartObject[productID].quantity : 0;
 }
 
 function getProductIDs() {

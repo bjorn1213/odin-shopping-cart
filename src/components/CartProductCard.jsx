@@ -1,62 +1,46 @@
 import PropTypes from "prop-types";
 import styles from "./CartProductCard.module.css";
-import { useEffect, useState } from "react";
-import getProductByID from "../utility/getProductByID";
 import Button from "./Button";
-import { getAmount, setProductAmount } from "../utility/cartUtility";
 import priceFormatter from "../utility/priceFormatter";
 
-function CartProductCard({ productID }) {
-  const [imgSrc, setImgSrc] = useState("");
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
-
-  const [curAmount, setAmount] = useState(getAmount(productID));
-
+function CartProductCard({ product, amountSetter }) {
   function addProduct() {
-    setProductAmount(productID, curAmount + 1);
-    setAmount(curAmount + 1);
+    amountSetter(product.quantity + 1);
   }
 
   function removeProduct() {
-    if (curAmount > 0) {
-      setProductAmount(productID, curAmount - 1);
-      setAmount(curAmount - 1);
+    if (product.quantity > 0) {
+      amountSetter(product.quantity - 1);
     }
   }
-
-  useEffect(() => {
-    const product = getProductByID(productID);
-    product.then((prod) => {
-      setImgSrc(prod.image);
-      setTitle(prod.title);
-      setPrice(prod.price);
-      setDescription(prod.description);
-    });
-  }, [productID]);
 
   return (
     <>
       <div className={styles.productCard}>
-        <img className={styles.productImg} src={imgSrc} alt={title} />
+        <img
+          className={styles.productImg}
+          src={product.image}
+          alt={product.title}
+        />
         <div className={styles.middleSection}>
-          <div className={styles.productTitle}>{title}</div>
-          {price ? (
-            <div className={styles.itemPrice}>€{priceFormatter(price)}</div>
+          <div className={styles.productTitle}>{product.title}</div>
+          {product.price ? (
+            <div className={styles.itemPrice}>
+              €{priceFormatter(product.price)}
+            </div>
           ) : (
             <></>
           )}
         </div>
-        {price ? (
+        {product.price ? (
           <div className={styles.rightSection}>
             <div className={styles.cartControls}>
-              <div className={styles.itemAmount}>x {curAmount}</div>
+              <div className={styles.itemAmount}>x {product.quantity}</div>
               <Button buttonText={"+"} buttonCallback={addProduct}></Button>
               <Button buttonText={"-"} buttonCallback={removeProduct}></Button>
             </div>
             <div className={styles.itemTotal}>{`€${priceFormatter(
-              price * curAmount
+              product.price * product.quantity
             )}`}</div>
           </div>
         ) : (
@@ -68,7 +52,8 @@ function CartProductCard({ productID }) {
 }
 
 CartProductCard.propTypes = {
-  productID: PropTypes.number,
+  product: PropTypes.object,
+  amountSetter: PropTypes.func,
 };
 
 export default CartProductCard;

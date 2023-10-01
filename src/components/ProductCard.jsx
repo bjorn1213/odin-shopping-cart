@@ -6,21 +6,18 @@ import Button from "./Button";
 import { getAmount, setProductAmount } from "../utility/cartUtility";
 
 function ProductCard({ productID }) {
-  const [imgSrc, setImgSrc] = useState("");
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
+  const [product, setProduct] = useState(null);
 
   const [curAmount, setAmount] = useState(getAmount(productID));
 
   function addProduct() {
-    setProductAmount(productID, curAmount + 1);
+    setProductAmount(product, curAmount + 1);
     setAmount(curAmount + 1);
   }
 
   function removeProduct() {
     if (curAmount > 0) {
-      setProductAmount(productID, curAmount - 1);
+      setProductAmount(product, curAmount - 1);
       setAmount(curAmount - 1);
     }
   }
@@ -28,26 +25,31 @@ function ProductCard({ productID }) {
   useEffect(() => {
     const product = getProductByID(productID);
     product.then((prod) => {
-      setImgSrc(prod.image);
-      setTitle(prod.title);
-      setPrice(prod.price);
-      setDescription(prod.description);
+      setProduct(prod);
     });
   }, [productID]);
 
   return (
     <>
-      <div className={styles.productCard}>
-        <img className={styles.productImg} src={imgSrc} alt={title} />
-        <div className={styles.productTitle}>{title}</div>
-        <div>{price}</div>
-        <div>{description}</div>
-        <div className={styles.cartControls}>
-          <Button buttonText={"-"} buttonCallback={removeProduct} />
-          {curAmount}
-          <Button buttonText={"+"} buttonCallback={addProduct} />
+      {product ? (
+        <div className={styles.productCard}>
+          <img
+            className={styles.productImg}
+            src={product.image}
+            alt={product.title}
+          />
+          <div className={styles.productTitle}>{product.title}</div>
+          <div>{product.price}</div>
+          <div>{product.description}</div>
+          <div className={styles.cartControls}>
+            <Button buttonText={"-"} buttonCallback={removeProduct} />
+            {curAmount}
+            <Button buttonText={"+"} buttonCallback={addProduct} />
+          </div>
         </div>
-      </div>
+      ) : (
+        <div>loading..</div>
+      )}
     </>
   );
 }

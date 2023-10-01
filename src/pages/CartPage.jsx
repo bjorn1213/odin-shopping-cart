@@ -1,15 +1,30 @@
 import CartProductCard from "../components/CartProductCard";
-import { getProductIDs } from "../utility/cartUtility";
+import { getCart, setProductAmount } from "../utility/cartUtility";
 import styles from "./CartPage.module.css";
+import { useState } from "react";
 
 function CartPage() {
-  const productIDs = getProductIDs();
+  const [cartObject, setCart] = useState(getCart());
+
+  function setProductAmount2(product) {
+    return (amount) => {
+      setProductAmount(product, amount);
+      setCart(getCart());
+    };
+  }
+
   return (
     <>
       <div className={styles.cartItemContainer}>
-        {productIDs.map((productID) => (
-          <CartProductCard key={productID} productID={productID} />
-        ))}
+        {Object.entries(cartObject).map((cartItem) => {
+          return (
+            <CartProductCard
+              key={cartItem[0]}
+              product={cartItem[1]}
+              amountSetter={setProductAmount2(cartItem[1])}
+            />
+          );
+        })}
       </div>
     </>
   );
