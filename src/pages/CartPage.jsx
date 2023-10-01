@@ -6,7 +6,7 @@ import { useState } from "react";
 function CartPage() {
   const [cartObject, setCart] = useState(getCart());
 
-  function setProductAmount2(product) {
+  function setCartProductAmount(product) {
     return (amount) => {
       setProductAmount(product, amount);
       setCart(getCart());
@@ -21,7 +21,7 @@ function CartPage() {
             <CartProductCard
               key={cartItem[0]}
               product={cartItem[1]}
-              amountSetter={setProductAmount2(cartItem[1])}
+              amountSetter={setCartProductAmount(cartItem[1])}
             />
           );
         })}
