@@ -1,7 +1,9 @@
+import pageStyle from "./PageStyling.module.css";
+
 function HomePage() {
   return (
     <>
-      <div className="page-content">Home Page</div>
+      <div className={pageStyle.pageContent}>Home page</div>
     </>
   );
 }

@@ -1,9 +1,12 @@
 import PropTypes from "prop-types";
+import buttonStyle from "./Button.module.css";
 
 function Button({ buttonText, buttonCallback }) {
   return (
     <>
-      <button onClick={buttonCallback}>{buttonText}</button>
+      <button className={buttonStyle.buttonStyled} onClick={buttonCallback}>
+        {buttonText}
+      </button>
     </>
   );
 }

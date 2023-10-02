@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import getProductByID from "../utility/getProductByID";
 import Button from "./Button";
 import { getAmount, setProductAmount } from "../utility/cartUtility";
+import priceFormatter from "../utility/priceFormatter";
 
 function ProductCard({ productID }) {
   const [product, setProduct] = useState(null);
@@ -39,12 +40,13 @@ function ProductCard({ productID }) {
             alt={product.title}
           />
           <div className={styles.productTitle}>{product.title}</div>
-          <div>{product.price}</div>
-          <div>{product.description}</div>
-          <div className={styles.cartControls}>
-            <Button buttonText={"-"} buttonCallback={removeProduct} />
-            {curAmount}
-            <Button buttonText={"+"} buttonCallback={addProduct} />
+          <div className={styles.bottomBit}>
+            <div>{priceFormatter(product.price)}</div>
+            <div className={styles.cartControls}>
+              <Button buttonText={"-"} buttonCallback={removeProduct} />
+              {curAmount}
+              <Button buttonText={"+"} buttonCallback={addProduct} />
+            </div>
           </div>
         </div>
       ) : (

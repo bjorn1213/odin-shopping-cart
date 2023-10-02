@@ -3,6 +3,7 @@ import { getCart, setProductAmount } from "../utility/cartUtility";
 import styles from "./CartPage.module.css";
 import { useState } from "react";
 import priceFormatter from "../utility/priceFormatter";
+import pageStyle from "./PageStyling.module.css";
 
 function CartPage() {
   const [cartObject, setCart] = useState(getCart());
@@ -24,22 +25,24 @@ function CartPage() {
 
   return (
     <>
-      {productCount ? (
-        <div className={styles.cartItemContainer}>
-          {Object.entries(cartObject).map((cartItem) => {
-            return (
-              <CartProductCard
-                key={cartItem[0]}
-                product={cartItem[1]}
-                amountSetter={setCartProductAmount(cartItem[1])}
-              />
-            );
-          })}
-        </div>
-      ) : (
-        <div className={styles.cartItemContainer}>No items in cart</div>
-      )}
-      <div className={styles.cartTotalContainer}>{priceFormatter(total)}</div>
+      <div className={pageStyle.pageContent}>
+        {productCount ? (
+          <div className={styles.cartItemContainer}>
+            {Object.entries(cartObject).map((cartItem) => {
+              return (
+                <CartProductCard
+                  key={cartItem[0]}
+                  product={cartItem[1]}
+                  amountSetter={setCartProductAmount(cartItem[1])}
+                />
+              );
+            })}
+          </div>
+        ) : (
+          <div className={styles.cartItemContainer}>No items in cart</div>
+        )}
+        <div className={styles.cartTotalContainer}>{priceFormatter(total)}</div>
+      </div>
     </>
   );
 }
